@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import ThemeSwitcher from '~/components/ui/ThemeSwitcher.vue'
-
 const { applicationVersion } = useVersion()
+const { snowEnabled, isWinter } = storeToRefs(useSnow())
+
+function toggleSnow() {
+  snowEnabled.value = !snowEnabled.value
+}
 </script>
 
 <template>
@@ -24,6 +27,8 @@ const { applicationVersion } = useVersion()
           <ThemeSwitcher />
           <LocaleSwitcher />
           <Button text rounded icon="i-tabler-brand-x" as="a" href="https://x.com/SlamaFR" target="_blank" />
+          <Divider v-if="isWinter" layout="vertical" />
+          <Button v-if="isWinter" text rounded :icon="snowEnabled ? 'i-tabler-snowflake' : 'i-tabler-snowflake-off'" @click="toggleSnow()" />
         </div>
       </div>
     </template>
